@@ -1,4 +1,4 @@
-import asyncio, discord, setting, os, sys, time, openpyxl, re , json, parser, datetime, psutil, ctypes, random
+import asyncio, discord, setting, datetime
 
 client = discord.Client()
 app = discord.Client()
@@ -15,84 +15,6 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot or os.path.isfile("%s_Banned.rts" % (message.author.id)):
                    return None
-
-                if "minekorea admin notice all" in message.content:
-                    if message.author.id == Setting.owner_id:
-                        embed=discord.Embed(title="MineKorea 전체공지 시스템", color=0xb2ebf4)
-                        embed.add_field(name="공지 발신을 준비하고 있습니다!", value="요청자 : <@" + message.author.id + ">", inline=True)
-                        mssg = await app.send_message(message.channel, embed=embed)
-                        a = []
-                        b = []
-                        e = []
-                        ec = {}
-                        embed=discord.Embed(title="MineKorea 전체공지 시스템", color=0xb2ebf4)
-                        embed.add_field(name="공지 발신중 입니다!", value="요청자 : <@" + message.author.id + ">", inline=True)
-                        await client.edit_message(mssg, embed=embed)
-                        for server in app.servers:
-                            for channel in server.channels:
-                                for tag in ["notice", "공지", "알림", "Alarm"]:
-                                    if tag in channel.name:
-                                        dtat = True
-                                        for distag in ["밴", "경고", "제재", "길드", "ban", "worry", "warn", "guild"]:
-                                            if distag in channel.name:
-                                                dtat = False
-                                        if dtat:
-                                            if not server.id in a:
-                                                try:
-                                                    await app.send_message(channel, message.content)
-                                                except discord.HTTPException:
-                                                    e.append(str(channel.id))
-                                                    ec[channel.id] = "HTTPException"
-                                                except app.Forbidden:
-                                                    e.append(str(channel.id))
-                                                    ec[channel.id] = "Forbidden"
-                                                except app.NotFound:
-                                                    e.append(str(channel.id))
-                                                    ec[channel.id] = "NotFound"
-                                                except discord.InvalidArgument:
-                                                    e.append(str(channel.id))
-                                                    ec[channel.id] = "InvalidArgument"
-                                                else:
-                                                    a.append(str(server.id))
-                                                    b.append(str(channel.id))
-                        asdf = "```\n"
-                        for server in client.servers:
-                            if not server.id in a:
-                                try:
-                                    ch = await app.create_channel(server, "minekorea-notice")
-                                    await app.send_message(ch, "공지채널을 찾을 수 없어 채널을 생성했습니다. 문의 : https://discord.gg/qQ5gNaG")
-                                    await app.send_message(ch, message.content)
-                                except:
-                                    asdf = asdf + str(server.name) + "[채널 생성에 실패하였습니다. (서버 관리자와 연락 요망)]\n"
-                                else:
-                                    asdf = asdf + str(server.name) + "[채널 생성 및 재발송에 성공하였습니다.]\n"
-                        asdf = asdf + "```"
-                        embed=discord.Embed(title="MK BOT 전체공지 시스템", color=0xb2ebf4)
-                        embed.add_field(name="공지 발신이 완료되었습니다!", value="요청자 : <@" + message.author.id + ">", inline=True)
-                        bs = "```\n"
-                        es = "```\n"
-                        for bf in b:
-                            bn = app.get_channel(bf).name
-                            bs = bs + str(bn) + "\n"
-                        for ef in e:
-                            en = app.get_channel(ef).name
-                            es = es + str(client.get_channel(ef).server.name) + "(#" + str(en) + ") : " + ec[ef] + "\n"
-                        bs = bs + "```"
-                        es = es + "```"
-                        if bs == "``````":
-                            bs = "``` ```"
-                        if es == "``````":
-                            es = "``` ```"
-                        if asdf == "``````":
-                            asdf = "``` ```"
-                        sucess = bs
-                        missing = es
-                        notfound = asdf
-                        embed.add_field(name="공지 발신에 성공한 채널은 다음과 같습니다 :", value=sucess, inline=False)
-                        embed.add_field(name="공지 발신에 실패한 채널은 다음과 같습니다 :", value=missing, inline=False)
-                        embed.add_field(name="키워드가 발견되지 않은 서버는 다음과 같습니다 :", value=notfound, inline=False)
-                        await app.edit_message(mssg, embed=embed)
-                        # DPNK 사용 구문 종점
                 
                 if "minekorea admin notice set" in message.content:
                     if message.author.id == Setting.owner_id:
