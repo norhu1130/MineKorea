@@ -1,4 +1,7 @@
-import asyncio, discord, setting, datetime
+import discord
+import asyncio
+import datetime
+import os
 
 client = discord.Client()
 app = discord.Client()
@@ -185,5 +188,5 @@ async def on_message(message):
                         embed.set_footer(text = "Seoul. (GMT +09:00) | Ver. %s | %s" % (Setting.version, Copyright))
                         await app.send_message(message.channel, embed=embed)
 
-
-app.run("NTUzODA3MTgzOTU2MDE3MTYz.D2Y7hA.geI8FZCRadSz_tb6ZgQyexMHYLk")
+access_token = os.environ["BOT_TOKEN"]
+app.run(access_toekn)
