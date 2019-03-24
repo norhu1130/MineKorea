@@ -10,8 +10,8 @@ Setting = setting.Settings()
 @app.event
 async def on_ready():
     print("로그인을 끝냈습니다." % ())
-    print("MineKorea Bot은 현재 정상 가동중입니다!!!" % ())
-    await app.change_presence(game=discord.Game(name="MineKorea에 방문해 주셔서 감사합니다.", type=0))
+    print("AmoBot은 현재 정상 가동중입니다!!!" % ())
+    await app.change_presence(game=discord.Game(name="-도움말 | 베타 버전", type=0))
     print("플레이 중 세팅을 성공적으로 완료하였습니다." %())
 
 @app.event
@@ -19,16 +19,16 @@ async def on_message(message):
     if message.author.bot or os.path.isfile("%s_Banned.rts" % (message.author.id)):
                    return None
                 
-                if "minekorea admin notice set" in message.content:
+                if "admin notice set" in message.content:
                     if message.author.id == Setting.owner_id:
                         f = open("notice_memo.rts", 'w')
                         f.write(message.content)
                         f.close()
-                        await client.send_message(message.channel, "<@%s>, 공지 내용을 성공적으로 등록하였습니다!\n`minekorea admin notice send [channel id]`를 입력하여 공지를 보낼 수 있습니다." % (message.author.id))
+                        await app.send_message(message.channel, "<@%s>, 공지 내용을 성공적으로 등록하였습니다!\n`minekorea admin notice send [channel id]`를 입력하여 공지를 보낼 수 있습니다." % (message.author.id))
                     else:
-                        await client.send_message(message.channel, "<@%s>, 봇 관리자로 등록되어 있지 않습니다. `setting.py` 파일을 확인하여 주세요." % (message.author.id))
+                        await app.send_message(message.channel, "<@%s>, 봇 관리자로 등록되어 있지 않습니다. `setting.py` 파일을 확인하여 주세요." % (message.author.id))
 
-                if message.content.startswith('minekorea admin notice send'):
+                if message.content.startswith('admin notice send'):
                     if message.author.id == Setting.owner_id:
                         q = open("notice_memo.rts", 'r').read()
                         q_channel = message.content[30:]
@@ -36,7 +36,6 @@ async def on_message(message):
                         try:
                             await app.send_message(channel_info, q)
                             await app.send_message(message.channel, "<@%s>, 성공적으로 `%s`에 메시지를 보냈습니다!" % (message.author.id, channel_info))
-                            log_actvity("I send Notice for %s(%s)." % (q_channel, channel_info))
                         except Exception as e:
                             await app.send_message(message.channel, "<@%s>, `%s`에 메시지를 보내지 못하였습니다.\n\n```%s```" % (message.author.id, channel_info, e))
                     else:
