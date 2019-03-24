@@ -19,16 +19,16 @@ async def on_message(message):
     if message.author.bot or os.path.isfile("%s_Banned.rts" % (message.author.id)):
                    return None
                 
-                if "admin notice set" in message.content:
+                if "--공지설정" in message.content:
                     if message.author.id == Setting.owner_id:
                         f = open("notice_memo.rts", 'w')
                         f.write(message.content)
                         f.close()
-                        await app.send_message(message.channel, "<@%s>, 공지 내용을 성공적으로 등록하였습니다!\n`minekorea admin notice send [channel id]`를 입력하여 공지를 보낼 수 있습니다." % (message.author.id))
+                        await app.send_message(message.channel, "<@%s>, 공지 내용을 성공적으로 등록하였습니다!\n`--공지발신[channel id]`를 입력하여 공지를 보낼 수 있습니다." % (message.author.id))
                     else:
                         await app.send_message(message.channel, "<@%s>, 봇 관리자로 등록되어 있지 않습니다. `setting.py` 파일을 확인하여 주세요." % (message.author.id))
 
-                if message.content.startswith('admin notice send'):
+                if message.content.startswith('--공지발신'):
                     if message.author.id == Setting.owner_id:
                         q = open("notice_memo.rts", 'r').read()
                         q_channel = message.content[30:]
@@ -43,7 +43,7 @@ async def on_message(message):
 
     
      
-                if "minekorea admin shutdown" == message.content:
+                if "--종료" == message.content:
                     if message.author.id == Setting.owner_id:
                         await app.send_message(message.channel, "<@%s>, 봇의 가동을 중지합니다. 5분 이내로 오프라인으로 전환됩니다(디스코드 API 딜레이)." % (message.author.id))
                         await app.change_presence(game=discord.Game(name="오프라인 전환중...사용을 중지해 주세요.", type=0))
@@ -51,16 +51,16 @@ async def on_message(message):
                     else:
                         await app.send_message(message.channel, "<@%s>, 봇 관리자로 등록되어 있지 않습니다." % (message.author.id))
                 
-                if message.content.startswith('M 사용소스'):
+                if message.content.startswith('-사용소스'):
                   embed=discord.Embed(title="사용소스 내역입니다.", description=None, color=0x00ff00)
                   embed.add_field(name='Rutap open source', value='https://github.com/Team-Hwagong')
-                  embed.add_field(name='MK Bot source', volue='당사에서 만들었습니다.')
                   await app.send_message(message.channel, embed=embed) 
 
-                if message.content.startswith('M 봇프사'):
+                if message.content.startswith('-봇프사'):
                   embed=discord.Embed(title='Bot profile photo', description=None, color=0x00ff00)
                   embed.add_field(name='Made by Ethan Kim the coder', value='봇의 프로필 사진입니다.')
                   await app.send_message(message.channel, embed=embed)
+                  await app.send_message()
 
                 if message.content.startswith("M 마크사이트"):
                   embed=discord.Embed(title='Mojang 사이트', description=None, color=0x00ff00)
