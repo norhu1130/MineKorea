@@ -60,7 +60,7 @@ async def on_message(message):
                   embed=discord.Embed(title='Bot profile photo', description=None, color=0x00ff00)
                   embed.add_field(name='Made by Ethan Kim the coder', value='봇의 프로필 사진입니다.')
                   await app.send_message(message.channel, embed=embed)
-                  await app.send_message("https://cdn.discordapp.com/attachments/558971678583947264/559186971587510284/image0.png")
+                  await app.send_message(message.channel, "https://cdn.discordapp.com/attachments/558971678583947264/559186971587510284/image0.png")
 
                 if message.content.startswith("M 마크사이트"):
                   embed=discord.Embed(title='Mojang 사이트', description=None, color=0x00ff00)
