@@ -1,1 +1,1 @@
-worker : python MineKorea.py
+worker : python AmoBot.py
