@@ -62,66 +62,65 @@ async def on_message(message):
                   await app.send_message(message.channel, embed=embed)
                   await app.send_message(message.channel, "https://cdn.discordapp.com/attachments/558971678583947264/559186971587510284/image0.png")
 
-                if message.content.startswith("M 마크사이트"):
+                if message.content.startswith("-마크사이트"):
                   embed=discord.Embed(title='Mojang 사이트', description=None, color=0x00ff00)
                   embed.add_field(name='https://minecraft.net/ko-kr/?ref=m', value='마인크래프트 사이트입니다.')
                   await app.send_message(message.channel, embed=embed)
 
-                if message.content.startswith('M 하이픽셀'):
+                if message.content.startswith('-하이픽셀'):
                   embed=discord.Embed(title='Hypixel Network', desription=None, color=0x00ff00)
                   embed.add_field(name='MC.hypixel.net', value='하이픽셀은 개발자도 많이 겜하는 서버!')
                   await app.send_message(message.channel, embed=embed) 
 
-                if message.content.startswith("M 온라인"):
+                if message.content.startswith("-온라인"):
                   embed=discord.Embed(title='온라인 상태', description=None, color=0x00ff00)
                   embed.add_field(name='I am online!', value='현재 온라인 상태입니다.')
                   await app.send_message(message.channel, embed=embed)  
 
-                if message.content.startswith('M 도움말'):
-                   embed=discord.Embed(title="MineKorea 도움말입니다.기본 접두사는 `M`입니다.", description=None, color=0x00ff00)
-                   embed.add_field(name='M 봇프사', value='봇의 프로필 정보를 출력합니다. '  )
-                   embed.add_field(name='M 사용소스', value='봇의 사용된 소스를 출력합니다. '  )
-                   embed.add_field(name='M 마크사이트', value='마인크래프트 공식 사이트를 출력합니다.')
-                   embed.add_field(name='M 온라인', value='봇이 온라인인지 확인합니다.메세지가 출력이 되지 않을 경우 오프라인입니다.')
-                   embed.add_field(name='M 정보', value='봇의 정보를 출력합니다.')
-                   embed.add_field(name='M 도움말', value='MK BOT의 명령어 전체를 출력합니다.')
-                   embed.add_field(name='M 개발프로그램', value='개발 프로그램을 출력합니다.')
-                   embed.add_field(name='M 아이디', value='당신의 유저아이디를 출력합니다.')
-                   embed.add_field(name='M 개발자 정보', value='MK BOT 개발자 정보를 출력합니다.')
-                   embed.add_field(name='MineKorea 개발자', value='Mine아모-Main #4899')
+                if message.content.startswith('-도움말'):
+                   embed=discord.Embed(title="AmoBot 도움말입니다.기본 접두사는 `-`입니다.", description=None, color=0x00ff00)
+                   embed.add_field(name='-봇프사', value='봇의 프로필 정보를 출력합니다. '  )
+                   embed.add_field(name='-사용소스', value='봇의 사용된 소스를 출력합니다. '  )
+                   embed.add_field(name='-마크사이트', value='마인크래프트 공식 사이트를 출력합니다.')
+                   embed.add_field(name='-온라인', value='봇이 온라인인지 확인합니다.메세지가 출력이 되지 않을 경우 오프라인입니다.')
+                   embed.add_field(name='-정보', value='봇의 정보를 출력합니다.')
+                   embed.add_field(name='-도움말', value='명령어 전체를 출력합니다.')
+                   embed.add_field(name='-개발프로그램', value='개발 프로그램을 출력합니다.')
+                   embed.add_field(name='-아이디', value='당신의 유저아이디를 출력합니다.')
+                   embed.add_field(name='-개발자 정보', value='개발자 정보를 출력합니다.')
                    await app.send_message(message.author, embed=embed)
 
-                if message.content.startswith('M 개발프로그램'):
+                if message.content.startswith('-개발프로그램'):
                    embed=discord.Embed(title='개발 프로그램 내역입니다.', description=None, color=0x00ff00)
                    embed.add_field(name='언어', value='Python 3.5.4')
                    embed.add_field(name='소스 수정 프로그램', value='Visual Studio Code')
                    await app.send_message(message.channel, embed=embed)  
 
-                if message.content.startswith('M 개발자명령어'):
+                if message.content.startswith('-개발자명령어'):
                    if message.author.id == Setting.owner_id:
-                    embed=discord.Embed()
-                    embed.add_field(name='MK 공지', value='MineKorea 봇을 이용해 공지를 발신합니다.')  
-                    embed.add_field(name='MK 공지설정', value='공지 내용을 등록합니다.')
-                    embed.add_field(name='MK 공지발신', value='공지 내용을 발신합니다.')
-                    embed.add_field(name='MK 종료', value='봇을 종료합니다.')  
+                    embed=discord.Embed(title="Only admin command!")
+                    embed.add_field(name='--공지', value='아직 공개 되지 않은 것')  
+                    embed.add_field(name='--공지설정', value='공지 내용을 등록합니다.')
+                    embed.add_field(name='--공지발신', value='공지 내용을 발신합니다.')
+                    embed.add_field(name='--종료', value='봇을 종료합니다.')  
                     await app.send_message(message.channel, embed=embed)
 
-                if message.content.startswith('M 아이디'):
+                if message.content.startswith('-아이디'):
                    embed=discord.Embed(title="당신의 유저 아이디 입니다.", color=0x00ff00)
                    embed.add_field(name=str(message.author.id), value='요청자 : ' + "<@" + str(message.author.id) + ">")
                    await app.send_message(message.channel, embed=embed)
 
-                if message.content.startswith('M 개발자 정보'):
+                if message.content.startswith('-개발자 정보'):
                    embed=discord.Embed(title='개발자 정보', description=None, color=0x00ff00)
-                   embed.add_field(name='Mine아모-Main #4899', value='총개발자')
+                   embed.add_field(name='MineAmo Computer #4899', value='총개발자')
                    await app.send_message(message.channel, embed=embed)
 
-                if message.content.startswith('M 정보'):
-                    embed = discord.Embed(title="MineKorea 정보!", description=None, color=0x00ff00)
-                    embed.add_field(name="[MineKorea 홈페이지]", value="https://minekorea.modoo.at/", inline=False)
-                    embed.add_field(name="[MineKorea 개발자]", value="Mine아모-Main #4899", inline=False)
-                    embed.add_field(name="[오픈소스 사용]", value="`M 사용소스`", inline=False)
-                    embed.add_field(name="[MineKorea 공식 링크]", value="공식 카페 : https://cafe.naver.com/purplewqrxs\n공식 지원 디스코드 : https://discord.gg/hdHPjUA", inline=False)
+                if message.content.startswith('-정보'):
+                    embed = discord.Embed(title="AmoBot 정보!", description=None, color=0x00ff00)
+                    embed.add_field(name="[Amo Bot 홈페이지]", value="https://minekorea.modoo.at/", inline=False)
+                    embed.add_field(name="[Amo Bot 개발자]", value="-개발자 정보", inline=False)
+                    embed.add_field(name="[오픈소스 사용]", value="-사용소스", inline=False)
+                    embed.add_field(name="[Amo Bot 공식 링크]", value="https://discord.gg/hdHPjUA", inline=False)
                     await app.send_message(message.channel, embed=embed)
 
                 if message.content.startswith('M 사용서버'):
