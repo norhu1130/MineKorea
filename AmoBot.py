@@ -123,23 +123,23 @@ async def on_message(message):
                     embed.add_field(name="[Amo Bot 공식 링크]", value="https://discord.gg/hdHPjUA", inline=False)
                     await app.send_message(message.channel, embed=embed)
 
-                if message.content.startswith('M 사용서버'):
+                if message.content.startswith('-사용서버'):
                    await app.send_message(message.channel, "사용된서버 %s" % (len(app.servers)))
 
                 if message.channel.is_private:
                      await app.send_message(app.get_channel(Setting.err_log_channel), "문의도착!" + message.content + "사용자이름 : " + str(message.author.name) + "#" + str(message.author.discriminator))
                      embed=discord.Embed(title="DM 문의 전송", description=None, color=0x00ff00)
-                     embed.add_field(name="DM 문의 전송 성공!", value="MineKorea 팀에게 문의가 전송되었습니다.", inline=True)
-                     embed.add_field(name="지원서버 링크", value="https://discord.gg/hdHPjUA", inline=True)
+                     embed.add_field(name="DM 문의 전송 성공!", value="지원 서버에 문의가 전송되었습니다.", inline=True)
+                     embed.add_field(name="지원서버 링크", value="https://invite.gg/amobotsupport", inline=True)
                      await app.send_message(message.channel, embed=embed)
 
-                if "M 문의" in message.content:
+                if "-문의" in message.content:
                      await app.send_message(app.get_channel(Setting.err_log_channel), "문의도착!" + message.content + "사용자이름 : " + str(message.author.name) + "#" + str(message.author.discriminator))
                      embed=discord.Embed(title='문의 발신 성공', color=0x00ff00)
                      embed.add_field(name='문의를 성공적으로 보냈습니다!', value='답장은 지원서버에서 받으실 수 있습니다.')
                      await app.send_message(message.author, embed=embed)
 
-                if "M 서버정보" == message.content:
+                if "-서버정보" == message.content:
                     embed = discord.Embed(title="\"%s\" 서버정보!" % (message.server.name), description=None, color=Setting.embed_color)
                     embed.add_field(name="서버 소유자", value="<@%s>" % message.server.owner.id, inline=False)
                     embed.add_field(name="서버 생성일", value="%s (UTC)" % (message.server.created_at), inline=False)
@@ -150,7 +150,7 @@ async def on_message(message):
                     embed.set_footer(text = "Server ID : %s | Ver. %s | %s" % (message.server.id, Setting.version, Copyright))
                     await app.send_message(message.channel, embed=embed)
 
-                if "M 핑" == message.content:
+                if "-핑" == message.content:
                     result = ping(message)
                     if result == False:
                         await app.send_message(message.channel, "<@" + message.author.id + ">,  서버의 안전을 위하여 상태를 한번에 여러명이 조회 할 수 없습니다!\n잠시 후 다시 시도 해 주세요!")
@@ -175,7 +175,7 @@ async def on_message(message):
                             await app.send_message(message.channel, "<@%s>, " % (message.author.id), embed=embed)
                             os.remove("no_ping.rtl")
 
-                if message.content.startswith('M 시간'):
+                if message.content.startswith('-시간'):
                     now = datetime.datetime.now()
                     if now.hour > 12:
                         embed = discord.Embed(title="현재 서버 시간은 %s년 %s월 %s일 오후 %s시 %s분 %s초 입니다!" % (now.year, now.month, now.day, now.hour - 12, now.minute, now.second), description=None, color=Setting.embed_color)
