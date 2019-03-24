@@ -19,6 +19,92 @@ async def on_message(message):
     if message.author.bot or os.path.isfile("%s_Banned.rts" % (message.author.id)):
                    return None
                 
+                if "--" in message.content:
+                    if message.author.id == Setting.owner_id:
+                        # DPNK 사용 구문 시점
+                        embed=discord.Embed(title="루탑봇 전체공지 시스템", color=Setting.embed_color)
+                        embed.add_field(name="공지 발신을 준비하고 있습니다!", value="요청자 : <@" + message.author.id + ">", inline=True)
+                        embed.set_footer(text = "Module by. Mary | Ver. %s | %s" % (Setting.version, Copyright))
+                        mssg = await app.send_message(message.channel, embed=embed)
+                        a = []
+                        b = []
+                        e = []
+                        ec = {}
+                        embed=discord.Embed(title="루탑봇 전체공지 시스템", color=Setting.embed_color)
+                        embed.add_field(name="공지 발신중 입니다!", value="요청자 : <@" + message.author.id + ">", inline=True)
+                        embed.set_footer(text = "Module by. Mary | Ver. %s | %s" % (Setting.version, Copyright))
+                        await app.edit_message(mssg, embed=embed)
+                        for server in app.servers:
+                            for channel in server.channels:
+                                for tag in ["notice", "공지", "알림", "Alarm"]:
+                                    if tag in channel.name:
+                                        dtat = True
+                                        for distag in ["밴", "경고", "제재", "길드", "ban", "worry", "warn", "guild"]:
+                                            if distag in channel.name:
+                                                dtat = False
+                                        if dtat:
+                                            if not server.id in a:
+                                                try:
+                                                    await app.send_message(channel, message.content)
+                                                except discord.HTTPException:
+                                                    e.append(str(channel.id))
+                                                    ec[channel.id] = "HTTPException"
+                                                except discord.Forbidden:
+                                                    e.append(str(channel.id))
+                                                    ec[channel.id] = "Forbidden"
+                                                except discord.NotFound:
+                                                    e.append(str(channel.id))
+                                                    ec[channel.id] = "NotFound"
+                                                except discord.InvalidArgument:
+                                                    e.append(str(channel.id))
+                                                    ec[channel.id] = "InvalidArgument"
+                                                else:
+                                                    a.append(str(server.id))
+                                                    b.append(str(channel.id))
+                        asdf = "```\n"
+                        for server in app.servers:
+                            if not server.id in a:
+                                try:
+                                    ch = await app.create_channel(server, "Team-화공-공지-자동생성됨")
+                                    await app.send_message(ch, "**__공지 채널을 발견하지 못하여 자동적으로 해당 채널을 생성하였습니다.__**\n자세한 사항은 루탑봇 지원 서버나 팀장 DM으로 부탁드립니다.\n\n지원 서버 : https://invite.gg/rutapbot\nDiscord : HwaHyang - Official#8283")
+                                    await app.send_message(ch, message.content)
+                                except:
+                                    asdf = asdf + str(server.name) + "[채널 생성에 실패하였습니다. (서버 관리자와 연락 요망)]\n"
+                                else:
+                                    asdf = asdf + str(server.name) + "[채널 생성 및 재발송에 성공하였습니다.]\n"
+                        asdf = asdf + "```"
+                        embed=discord.Embed(title="루탑봇 전체공지 시스템", color=Setting.embed_color)
+                        embed.add_field(name="공지 발신이 완료되었습니다!", value="요청자 : <@" + message.author.id + ">", inline=True)
+                        bs = "```\n"
+                        es = "```\n"
+                        for bf in b:
+                            bn = app.get_channel(bf).name
+                            bs = bs + str(bn) + "\n"
+                        for ef in e:
+                            en = app.get_channel(ef).name
+                            es = es + str(app.get_channel(ef).server.name) + "(#" + str(en) + ") : " + ec[ef] + "\n"
+                        bs = bs + "```"
+                        es = es + "```"
+                        if bs == "``````":
+                            bs = "``` ```"
+                        if es == "``````":
+                            es = "``` ```"
+                        if asdf == "``````":
+                            asdf = "``` ```"
+                        sucess = bs
+                        missing = es
+                        notfound = asdf
+                        embed.add_field(name="공지 발신에 성공한 채널은 다음과 같습니다 :", value=sucess, inline=False)
+                        embed.add_field(name="공지 발신에 실패한 채널은 다음과 같습니다 :", value=missing, inline=False)
+                        embed.add_field(name="키워드가 발견되지 않은 서버는 다음과 같습니다 :", value=notfound, inline=False)
+                        embed.set_footer(text = "Module by. Mary | Ver. %s | %s" % (Setting.version, Copyright))
+                        await app.edit_message(mssg, embed=embed)
+                        # DPNK 사용 구문 종점
+                        log_actvity("I send Notice for all Server. (content : %s\nSuccess : %s\nFail : %s\nNotfound : %s)." % (message.content, sucess, missing, notfound))
+                    else:
+                        await app.send_message(message.channel, "<@%s>, 봇 관리자로 등록되어 있지 않습니다. `setting.py` 파일을 확인하여 주세요." % (message.author.id))
+
+                
                 if "--공지설정" in message.content:
                     if message.author.id == Setting.owner_id:
                         f = open("notice_memo.rts", 'w')
