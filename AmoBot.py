@@ -54,6 +54,7 @@ async def on_message(message):
                 if message.content.startswith('-사용소스'):
                   embed=discord.Embed(title="사용소스 내역입니다.", description=None, color=0x00ff00)
                   embed.add_field(name='Rutap open source', value='https://github.com/Team-Hwagong')
+                  embed.add_field(name='Raeto0322Bot', value='https://github.com/haveadooday/Raeto0322Bot-')
                   await app.send_message(message.channel, embed=embed) 
 
                 if message.content.startswith('-봇프사'):
@@ -126,19 +127,6 @@ async def on_message(message):
                 if message.content.startswith('-사용서버'):
                    await app.send_message(message.channel, "사용된서버 %s" % (len(app.servers)))
 
-                if message.channel.is_private:
-                     await app.send_message(app.get_channel(Setting.err_log_channel), "문의도착!" + message.content + "사용자이름 : " + str(message.author.name) + "#" + str(message.author.discriminator))
-                     embed=discord.Embed(title="DM 문의 전송", description=None, color=0x00ff00)
-                     embed.add_field(name="DM 문의 전송 성공!", value="지원 서버에 문의가 전송되었습니다.", inline=True)
-                     embed.add_field(name="지원서버 링크", value="https://invite.gg/amobotsupport", inline=True)
-                     await app.send_message(message.channel, embed=embed)
-
-                if "-문의" in message.content:
-                     await app.send_message(app.get_channel(Setting.err_log_channel), "문의도착!" + message.content + "사용자이름 : " + str(message.author.name) + "#" + str(message.author.discriminator))
-                     embed=discord.Embed(title='문의 발신 성공', color=0x00ff00)
-                     embed.add_field(name='문의를 성공적으로 보냈습니다!', value='답장은 지원서버에서 받으실 수 있습니다.')
-                     await app.send_message(message.author, embed=embed)
-
                 if "-서버정보" == message.content:
                     embed = discord.Embed(title="\"%s\" 서버정보!" % (message.server.name), description=None, color=Setting.embed_color)
                     embed.add_field(name="서버 소유자", value="<@%s>" % message.server.owner.id, inline=False)
@@ -150,31 +138,6 @@ async def on_message(message):
                     embed.set_footer(text = "Server ID : %s | Ver. %s | %s" % (message.server.id, Setting.version, Copyright))
                     await app.send_message(message.channel, embed=embed)
 
-                if "-핑" == message.content:
-                    result = ping(message)
-                    if result == False:
-                        await app.send_message(message.channel, "<@" + message.author.id + ">,  서버의 안전을 위하여 상태를 한번에 여러명이 조회 할 수 없습니다!\n잠시 후 다시 시도 해 주세요!")
-                    else:
-                        embed = discord.Embed(title="루탑봇 상태!", description=None, color=Setting.embed_color)
-                        if 0 < result < 400:
-                            embed.add_field(name="서버 핑", value="`%sms`(:large_blue_circle: 핑이 정상입니다.)" % (str(result)), inline=False)
-                            embed.add_field(name="봇 업타임", value="https://status.hwahyang.xyz/", inline=False)
-                            embed.set_footer(text = "Ver. %s | %s" % (Setting.version, Copyright))
-                            await app.send_message(message.channel, "<@%s>, " % (message.author.id), embed=embed)
-                            os.remove("no_ping.rtl")
-                        elif result > 399:
-                            embed.add_field(name="서버 핑", value="`%sms`(:red_circle: 핑이 비정상입니다.)" % (str(result)), inline=False)
-                            embed.add_field(name="봇 업타임", value="https://status.hwahyang.xyz/", inline=False)
-                            embed.set_footer(text = "Ver. %s | %s" % (Setting.version, Copyright))
-                            await app.send_message(message.channel, "<@%s>, " % (message.author.id), embed=embed)
-                            os.remove("no_ping.rtl")
-                        else:
-                            embed.add_field(name="서버 핑", value="`%sms`(:question: 결과 도출 도중 문제가 발생했습니다.)" % (str(result)), inline=False)
-                            embed.add_field(name="봇 업타임", value="https://status.hwahyang.xyz/", inline=False)
-                            embed.set_footer(text = "Ver. %s | %s" % (Setting.version, Copyright))
-                            await app.send_message(message.channel, "<@%s>, " % (message.author.id), embed=embed)
-                            os.remove("no_ping.rtl")
-
                 if message.content.startswith('-시간'):
                     now = datetime.datetime.now()
                     if now.hour > 12:
@@ -185,6 +148,26 @@ async def on_message(message):
                         embed = discord.Embed(title="현재 서버 시간은 %s년 %s월 %s일 오전 %s시 %s분 %s초 입니다!" % (now.year, now.month, now.day, now.hour, now.minute, now.second), description=None, color=Setting.embed_color)
                         embed.set_footer(text = "Seoul. (GMT +09:00) | Ver. %s | %s" % (Setting.version, Copyright))
                         await app.send_message(message.channel, embed=embed)
+                                    
+                if message.content.startswith('-문의'):
+                      learn = message.content.replace('-문의', "")
+                      embed = discord.Embed(title='문의전송안내',description='문의내용:'+learn+'\n 혹시 잘못전송되었으면 다시문의를 하여 "취소합니다."',color=0x00ff00)
+                      await client.send_message(channel,embed=embed)
+                      a = learn[1]
+                      file = open('문의채널.txt')
+                      channel1 = discord.Object(id=file.read())
+                      file.close()
+                      embed = discord.Embed(title='문의 수신',description='문의전송안내'+'아이디:'+id+'이름:'+message.author.name+'\n 내용:'+learn,color=0x00ff00)
+                      await app.send_message(channel1,embed=embed)
+                   
+                if message.content.startswith('-답변'):
+                    learn = message.content.split(' ')
+                    embed = discord.Embed(title='문의답변',description='답변이 왔습니다. \n 내용:'+learn[2],color=0x00ff00)
+                    member = discord.utils.get(client.get_all_members(),id=learn[1])
+                    await client.send_message(member,embed=embed)
+                    await client.send_message(channel,':white_check_mark:')
+
+                   
 
 access_token = os.environ["BOT_TOKEN"]
 app.run(access_toekn)
