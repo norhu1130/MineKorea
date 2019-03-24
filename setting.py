@@ -3,8 +3,8 @@ import datetime
 class Settings:
     def __init__(self):
         self.owner_id = "467625748631519244"
-        self.version = "MK Bot Classic"
-        self.copy = "© %s MineKorea" % datetime.datetime.now().year
+        self.version = "AmoBot"
+        self.copy = "© %s Team Melon" % datetime.datetime.now().year
         self.err_log_channel = "554191101129523201"
 
 
